@@ -1,0 +1,50 @@
+Tasks   停车场可以停⻋、取⻋
+
+停车
+Given   车场，车
+
+T1
+    Given   有车位的停车场， 有车牌的车，且车牌不重复
+    When    停车
+    Then    停车成功， 出票
+
+T2
+    Given   有车位的停车场, 无车牌的车
+    When    停车
+    Then    不发票
+
+    Given   有车位的停车场, 有车牌的车，但车牌重复
+    When    停车
+    Then    不发票
+
+T3
+    Given   无车位的停车场
+    When    停车
+    Then    不发票
+
+    Given   无车位的停车场，有车牌的车
+    When    停车
+    Then    没有空位，不发票
+
+    Given   无车位的停车场, 无车牌的车
+    When    停车
+    Then    不发票
+
+
+取车：
+Given   票（有效无效)
+
+T4
+    Given   无票
+    When    取车
+    Then    出车失败
+
+T5
+    Given   无效的票
+    When    取车
+    Then    出车失败
+
+T6
+    Given   有效的票
+    When    取车
+    Then    出车成功
