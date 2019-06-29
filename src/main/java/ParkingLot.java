@@ -7,7 +7,7 @@ import java.util.Set;
 
 class ParkingLot {
     private int capacity;
-    private Map<Ticket, Car> lots = new HashMap<>();
+    private Map<Ticket, Car> lot = new HashMap<>();
     private Set<String> carsNumberSet = new HashSet<>();
 
     ParkingLot(int capacity) {
@@ -15,19 +15,21 @@ class ParkingLot {
     }
 
     Ticket park(Car car) throws RuntimeException {
-        String carNumber = car.getNumber();
         if (!hasSpace()) {
             throw new ParkingLotFullException();
         }
-        if (carNumber.equals("")) {
+
+        if (car == null || car.getNumber().equals("")) {
             throw new EmptyCarNumberException();
         }
-        if (hasCarNumberExisted(carNumber)) {
+
+        if (hasCarNumberExisted(car.getNumber())) {
             throw new DuplicatedCarNumberException();
         }
+
         Ticket ticket = new Ticket();
-        lots.put(ticket, car);
-        carsNumberSet.add(carNumber);
+        lot.put(ticket, car);
+        carsNumberSet.add(car.getNumber());
         return ticket;
     }
 
@@ -35,7 +37,7 @@ class ParkingLot {
         if (ticket == null) {
             throw new TicketNullException();
         }
-        Car car = lots.get(ticket);
+        Car car = lot.get(ticket);
         if (car == null) {
             throw new TicketInvalidException();
         }
@@ -43,7 +45,7 @@ class ParkingLot {
     }
 
     Boolean hasSpace() {
-        return lots.size() < capacity;
+        return lot.size() < capacity;
     }
 
     private Boolean hasCarNumberExisted(String carNumber) {
@@ -51,11 +53,11 @@ class ParkingLot {
     }
 
     Boolean hasCar(Car car) {
-        return car != null && lots.containsValue(car);
+        return car != null && lot.containsValue(car);
     }
 
     Boolean canFindCarByTicket(Ticket ticket) {
-        return lots.containsKey(ticket);
+        return lot.containsKey(ticket);
     }
 
     Set<String> getCarsNumberSet() {

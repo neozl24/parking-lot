@@ -17,6 +17,7 @@ class ParkingLotTest {
         Car car4 = new Car("");
         parkingLot.park(car1);
 
+        assertThrows(ParkingLotFullException.class, () -> parkingLot.park(null));
         assertThrows(ParkingLotFullException.class, () -> parkingLot.park(car2));
         assertThrows(ParkingLotFullException.class, () -> parkingLot.park(car3));
         assertThrows(ParkingLotFullException.class, () -> parkingLot.park(car4));
