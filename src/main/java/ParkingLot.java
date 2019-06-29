@@ -41,4 +41,9 @@ class ParkingLot {
         }
         return car;
     }
+
+    Boolean hasCar(Car car) {
+        return car != null && lots.containsValue(car);
+    }
+
 }

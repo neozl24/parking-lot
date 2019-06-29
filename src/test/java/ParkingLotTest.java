@@ -66,7 +66,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_throw_corresponding_car_when_picking_given_correct_ticket() {
+    void should_return_corresponding_car_when_picking_given_correct_ticket() {
         ParkingLot parkingLot = new ParkingLot(100);
         Car car = new Car("A123456");
         Ticket ticket = parkingLot.park(car);
