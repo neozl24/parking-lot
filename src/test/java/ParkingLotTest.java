@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParkingLotTest {
     @Test
-    void should_return_parking_lot_full_exception_when_parking_given_a_full_parking_lot() {
+    void should_throw_parking_lot_full_exception_when_parking_given_a_full_parking_lot() {
         ParkingLot parkingLot = new ParkingLot(1);
         String carNumber = "A123456";
         String anotherCarNumber = "B123456";
@@ -23,7 +23,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_empty_car_number_exception_when_parking_given_an_available_parking_lot_and_car_without_number()  {
+    void should_throw_empty_car_number_exception_when_parking_given_an_available_parking_lot_and_car_without_number()  {
         Car car = new Car("");
         ParkingLot parkingLot = new ParkingLot(100);
 
@@ -31,7 +31,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_duplicated_car_number_exception_when_parking_given_an_available_parking_lot_and_car_with_valid_number() {
+    void should_throw_duplicated_car_number_exception_when_parking_given_an_available_parking_lot_and_car_with_valid_number() {
         String carNumber = "A123456";
         Car car1 = new Car(carNumber);
         Car car2 = new Car(carNumber);
@@ -52,13 +52,13 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_ticket_null_exception_when_picking_given_no_ticket() {
+    void should_throw_ticket_null_exception_when_picking_given_no_ticket() {
         ParkingLot parkingLot = new ParkingLot(100);
         assertThrows(TicketNullException.class, () -> parkingLot.pick(null));
     }
 
     @Test
-    void should_return_ticket_invalid_exception_when_picking_given_ticket_of_nonexistent_car() {
+    void should_throw_ticket_invalid_exception_when_picking_given_ticket_of_nonexistent_car() {
         ParkingLot parkingLot = new ParkingLot(100);
         Ticket ticket = new Ticket();
 
@@ -66,7 +66,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_corresponding_car_when_picking_given_correct_ticket() {
+    void should_throw_corresponding_car_when_picking_given_correct_ticket() {
         ParkingLot parkingLot = new ParkingLot(100);
         Car car = new Car("A123456");
         Ticket ticket = parkingLot.park(car);
