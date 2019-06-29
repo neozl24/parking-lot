@@ -21,6 +21,7 @@ class GraduateParkingBoyTest {
         Car car1 = new Car("A123456");
         Car car2 = new Car("");
 
+        assertThrows(NoAvailableParkingLotException.class, () -> graduateParkingBoy.park(car1, null));
         assertThrows(NoAvailableParkingLotException.class, () -> graduateParkingBoy.park(car1, parkingLots));
         assertThrows(NoAvailableParkingLotException.class, () -> graduateParkingBoy.park(car2, parkingLots));
     }
@@ -34,6 +35,7 @@ class GraduateParkingBoyTest {
 
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy();
 
+        assertThrows(EmptyCarNumberException.class, () -> graduateParkingBoy.park(null, parkingLots));
         assertThrows(EmptyCarNumberException.class, () -> graduateParkingBoy.park(new Car(""), parkingLots));
     }
 
@@ -43,10 +45,12 @@ class GraduateParkingBoyTest {
         Car car = new Car(carNumber);
         Car carWithDuplicatedNumber = new Car(carNumber);
 
-        ParkingLot parkingLot = new ParkingLot(10);
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
 
         List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
 
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy();
 
@@ -85,7 +89,7 @@ class GraduateParkingBoyTest {
 
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy();
 
-        assertThrows(TicketNullException.class, () -> graduateParkingBoy.pick(null));
+        assertThrows(TicketNullException.class, () -> graduateParkingBoy.pick(null, parkingLots));
     }
 
     @Test
@@ -98,7 +102,7 @@ class GraduateParkingBoyTest {
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy();
         Ticket ticketOfNonExistentCar = new Ticket();
 
-        assertThrows(TicketInvalidException.class, () -> graduateParkingBoy.pick(ticketOfNonExistentCar));
+        assertThrows(TicketInvalidException.class, () -> graduateParkingBoy.pick(ticketOfNonExistentCar, parkingLots));
     }
 
     @Test
@@ -112,8 +116,8 @@ class GraduateParkingBoyTest {
 
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy();
 
-        Ticket ticket = graduateParkingBoy.park(car);
-        Car returnedCar = graduateParkingBoy.pick(ticket);
+        Ticket ticket = graduateParkingBoy.park(car, parkingLots);
+        Car returnedCar = graduateParkingBoy.pick(ticket, parkingLots);
 
         assertEquals(car, returnedCar);
     }

@@ -16,13 +16,13 @@ class ParkingLot {
 
     Ticket park(Car car) throws RuntimeException {
         String carNumber = car.getNumber();
-        if (lots.size() >= capacity) {
+        if (!hasSpace()) {
             throw new ParkingLotFullException();
         }
         if (carNumber.equals("")) {
             throw new EmptyCarNumberException();
         }
-        if (carsNumberSet.contains(carNumber)) {
+        if (hasCarNumberExisted(carNumber)) {
             throw new DuplicatedCarNumberException();
         }
         Ticket ticket = new Ticket();
@@ -42,8 +42,23 @@ class ParkingLot {
         return car;
     }
 
+    Boolean hasSpace() {
+        return lots.size() < capacity;
+    }
+
+    private Boolean hasCarNumberExisted(String carNumber) {
+        return carsNumberSet.contains(carNumber);
+    }
+
     Boolean hasCar(Car car) {
         return car != null && lots.containsValue(car);
     }
 
+    Boolean canFindCarByTicket(Ticket ticket) {
+        return lots.containsKey(ticket);
+    }
+
+    Set<String> getCarsNumberSet() {
+        return carsNumberSet;
+    }
 }
