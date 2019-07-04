@@ -78,8 +78,7 @@ class SuperParkingBoyTest {
 
         SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
-        final String carNumber = "A123456";
-        Car car = new Car(carNumber);
+        Car car = new Car("A888888");
 
         Ticket ticket = superParkingBoy.park(car, parkingLots);
         assertNotNull(ticket);

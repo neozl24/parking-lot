@@ -70,8 +70,7 @@ class GraduateParkingBoyTest {
 
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy();
 
-        final String carNumber = "A123456";
-        Car car = new Car(carNumber);
+        Car car = new Car("A888888");
 
         Ticket ticket = graduateParkingBoy.park(car, parkingLots);
         assertNotNull(ticket);
