@@ -6,7 +6,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SmartParkingBoyTest {
+class SuperParkingBoyTest {
     @Test
     void should_throw_no_available_parking_lot_exception_when_parking_given_all_parking_lots_at_full() {
         ParkingLot parkingLot1 = new ParkingLot(0);
@@ -16,14 +16,14 @@ class SmartParkingBoyTest {
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
         Car car1 = new Car("A123456");
         Car car2 = new Car("");
 
-        assertThrows(NoAvailableParkingLotException.class, () -> smartParkingBoy.park(car1, null));
-        assertThrows(NoAvailableParkingLotException.class, () -> smartParkingBoy.park(car1, parkingLots));
-        assertThrows(NoAvailableParkingLotException.class, () -> smartParkingBoy.park(car2, parkingLots));
+        assertThrows(NoAvailableParkingLotException.class, () -> superParkingBoy.park(car1, null));
+        assertThrows(NoAvailableParkingLotException.class, () -> superParkingBoy.park(car1, parkingLots));
+        assertThrows(NoAvailableParkingLotException.class, () -> superParkingBoy.park(car2, parkingLots));
     }
 
     @Test
@@ -33,10 +33,10 @@ class SmartParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
-        assertThrows(EmptyCarNumberException.class, () -> smartParkingBoy.park(null, parkingLots));
-        assertThrows(EmptyCarNumberException.class, () -> smartParkingBoy.park(new Car(""), parkingLots));
+        assertThrows(EmptyCarNumberException.class, () -> superParkingBoy.park(null, parkingLots));
+        assertThrows(EmptyCarNumberException.class, () -> superParkingBoy.park(new Car(""), parkingLots));
     }
 
     @Test
@@ -52,30 +52,36 @@ class SmartParkingBoyTest {
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
-        smartParkingBoy.park(car, parkingLots);
+        superParkingBoy.park(car, parkingLots);
 
-        assertThrows(DuplicatedCarNumberException.class, () -> smartParkingBoy.park(carWithDuplicatedNumber, parkingLots));
+        assertThrows(DuplicatedCarNumberException.class, () -> superParkingBoy.park(carWithDuplicatedNumber, parkingLots));
     }
 
     @Test
-    void should_return_ticket_and_park_into_the_first_available_parking_lot_when_parking_given_a_car_with_valid_number_and_more_than_one_available_parking_lot() {
-        ParkingLot parkingLot1 = new ParkingLot(10);
-        ParkingLot parkingLot2 = new ParkingLot(30);
-        ParkingLot parkingLot3 = new ParkingLot(20);
+    void should_return_ticket_and_park_into_the_highest_vacancy_rate_parking_lot_when_parking_given_a_car_with_valid_number_and_more_than_one_available_parking_lot() {
+        ParkingLot parkingLot1 = new ParkingLot(2);
+        parkingLot1.park(new Car("A100021"));
+
+        ParkingLot parkingLot2 = new ParkingLot(3);
+        parkingLot2.park(new Car("A100031"));
+
+        ParkingLot parkingLot3 = new ParkingLot(5);
+        parkingLot3.park(new Car("A100051"));
+        parkingLot3.park(new Car("A100052"));
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
         parkingLots.add(parkingLot3);
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
         final String carNumber = "A123456";
         Car car = new Car(carNumber);
 
-        Ticket ticket = smartParkingBoy.park(car, parkingLots);
+        Ticket ticket = superParkingBoy.park(car, parkingLots);
         assertNotNull(ticket);
 
         assertFalse(parkingLot1.hasCar(car));
@@ -90,9 +96,9 @@ class SmartParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
-        assertThrows(TicketNullException.class, () -> smartParkingBoy.pick(null, parkingLots));
+        assertThrows(TicketNullException.class, () -> superParkingBoy.pick(null, parkingLots));
     }
 
     @Test
@@ -102,10 +108,10 @@ class SmartParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
         Ticket ticketOfNonExistentCar = new Ticket();
 
-        assertThrows(TicketInvalidException.class, () -> smartParkingBoy.pick(ticketOfNonExistentCar, parkingLots));
+        assertThrows(TicketInvalidException.class, () -> superParkingBoy.pick(ticketOfNonExistentCar, parkingLots));
     }
 
     @Test
@@ -117,10 +123,10 @@ class SmartParkingBoyTest {
 
         Car car = new Car("A123456");
 
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy();
 
-        Ticket ticket = smartParkingBoy.park(car, parkingLots);
-        Car returnedCar = smartParkingBoy.pick(ticket, parkingLots);
+        Ticket ticket = superParkingBoy.park(car, parkingLots);
+        Car returnedCar = superParkingBoy.pick(ticket, parkingLots);
 
         assertEquals(car, returnedCar);
     }
