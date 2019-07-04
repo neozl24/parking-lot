@@ -60,7 +60,7 @@ class SmartParkingBoyTest {
     }
 
     @Test
-    void should_return_ticket_and_park_into_the_most_remaing_spaces_parking_lot_when_parking_given_a_car_with_valid_number_and_more_than_one_available_parking_lot() {
+    void should_return_ticket_and_park_into_the_first_available_parking_lot_when_parking_given_a_car_with_valid_number_and_more_than_one_available_parking_lot() {
         ParkingLot parkingLot1 = new ParkingLot(10);
         ParkingLot parkingLot2 = new ParkingLot(30);
         ParkingLot parkingLot3 = new ParkingLot(20);
