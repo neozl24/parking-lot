@@ -48,6 +48,11 @@ class ParkingLot {
         return lot.size() < capacity;
     }
 
+    int getRemainingSpaces() {
+        int parkedCarsNumber = lot.size();
+        return parkedCarsNumber < capacity ? capacity - parkedCarsNumber : 0;
+    }
+
     private Boolean hasCarNumberExisted(String carNumber) {
         return carsNumberSet.contains(carNumber);
     }
