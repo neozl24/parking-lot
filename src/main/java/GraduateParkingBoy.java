@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class GraduateParkingBoy {
+class GraduateParkingBoy extends ParkingMan {
 
     Ticket park(Car car, List<ParkingLot> parkingLots) {
         if (parkingLots == null) {
@@ -33,18 +33,5 @@ class GraduateParkingBoy {
         }
 
         return firstAvailableParkingLot.park(car);
-    }
-
-    Car pick(Ticket ticket, List<ParkingLot> parkingLots) {
-        if (ticket == null) {
-            throw new TicketNullException();
-        }
-
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.canFindCarByTicket(ticket)) {
-                return parkingLot.pick(ticket);
-            }
-        }
-        throw new TicketInvalidException();
     }
 }
