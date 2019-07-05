@@ -6,7 +6,7 @@ import java.util.Set;
 
 abstract class ParkingMan {
 
-    abstract ParkingLot findTargetParkingLot(List<ParkingLot> parkingLots);
+    abstract ParkingLot updateTargetParkingLot(ParkingLot comparedParkingLot, ParkingLot originalTargetParkingLot);
 
     Ticket park(Car car, List<ParkingLot> parkingLots) {
         {
@@ -14,7 +14,14 @@ abstract class ParkingMan {
                 throw new NoAvailableParkingLotException();
             }
 
-            ParkingLot targetParkingLot = findTargetParkingLot(parkingLots);
+            Set<String> allCarsNumber = new HashSet<>();
+
+            ParkingLot targetParkingLot = null;
+
+            for (ParkingLot parkingLot : parkingLots) {
+                allCarsNumber.addAll(parkingLot.getCarsNumberSet());
+                targetParkingLot = updateTargetParkingLot(parkingLot, targetParkingLot);
+            }
 
             if (targetParkingLot == null) {
                 throw new NoAvailableParkingLotException();
@@ -22,11 +29,6 @@ abstract class ParkingMan {
 
             if (car == null || car.getNumber().equals("")) {
                 throw new EmptyCarNumberException();
-            }
-
-            Set<String> allCarsNumber = new HashSet<>();
-            for (ParkingLot parkingLot : parkingLots) {
-                allCarsNumber.addAll(parkingLot.getCarsNumberSet());
             }
 
             if (allCarsNumber.contains(car.getNumber())) {

@@ -1,19 +1,14 @@
-import java.util.List;
-
 class SuperParkingBoy extends ParkingMan {
 
     @Override
-    ParkingLot findTargetParkingLot(List<ParkingLot> parkingLots) {
-        ParkingLot parkingLotWithHighestVacancyRate = null;
-
-        double highestVacancyRate = 0;
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.getVacancyRate() > highestVacancyRate) {
-                parkingLotWithHighestVacancyRate = parkingLot;
-                highestVacancyRate = parkingLot.getVacancyRate();
-            }
+    ParkingLot updateTargetParkingLot(ParkingLot comparedParkingLot, ParkingLot originalTargetParkingLot) {
+        if (originalTargetParkingLot == null && comparedParkingLot.getVacancyRate() > 0) {
+            return comparedParkingLot;
+        } else if (originalTargetParkingLot == null) {
+            return null;
+        } else if (comparedParkingLot.getVacancyRate() > originalTargetParkingLot.getVacancyRate()) {
+            return comparedParkingLot;
         }
-
-        return parkingLotWithHighestVacancyRate;
+        return originalTargetParkingLot;
     }
 }

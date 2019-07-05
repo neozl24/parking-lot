@@ -1,15 +1,10 @@
-import java.util.List;
-
 class GraduateParkingBoy extends ParkingMan {
 
     @Override
-    ParkingLot findTargetParkingLot(List<ParkingLot> parkingLots) {
-        ParkingLot firstAvailableParkingLot = null;
-        for (ParkingLot parkingLot : parkingLots) {
-            if (firstAvailableParkingLot == null && parkingLot.hasSpace()) {
-                firstAvailableParkingLot = parkingLot;
-            }
+    ParkingLot updateTargetParkingLot(ParkingLot comparedParkingLot, ParkingLot originalTargetParkingLot) {
+        if (originalTargetParkingLot == null && comparedParkingLot.hasSpace()) {
+            return comparedParkingLot;
         }
-        return firstAvailableParkingLot;
+        return originalTargetParkingLot;
     }
 }
