@@ -1,4 +1,4 @@
-class GraduateParkingBoy extends ParkingMan {
+class GraduateParkingBoy extends ParkingBoy {
 
     @Override
     ParkingLot updateTargetParkingLot(ParkingLot comparedParkingLot, ParkingLot originalTargetParkingLot) {

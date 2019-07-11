@@ -1,4 +1,4 @@
-class SmartParkingBoy extends ParkingMan {
+class SmartParkingBoy extends ParkingBoy {
 
     @Override
     ParkingLot updateTargetParkingLot(ParkingLot comparedParkingLot, ParkingLot originalTargetParkingLot) {
