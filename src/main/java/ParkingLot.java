@@ -38,6 +38,8 @@ class ParkingLot {
         if (car == null) {
             throw new TicketInvalidException();
         }
+
+        ticketToCar.remove(ticket);
         return car;
     }
 
