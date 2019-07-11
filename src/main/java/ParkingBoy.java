@@ -14,12 +14,15 @@ abstract class ParkingBoy {
                 throw new NoAvailableParkingLotException();
             }
 
-            Set<String> allCarsNumber = new HashSet<>();
+            boolean hasCarNumberExisted = false;
+            boolean isCarNumberEmpty = car == null || car.getNumber().equals("");
 
             ParkingLot targetParkingLot = null;
 
             for (ParkingLot parkingLot : parkingLots) {
-                allCarsNumber.addAll(parkingLot.getCarsNumberSet());
+                if (!isCarNumberEmpty && parkingLot.hasCarNumberExisted(car.getNumber())) {
+                    hasCarNumberExisted = true;
+                }
                 targetParkingLot = updateTargetParkingLot(parkingLot, targetParkingLot);
             }
 
@@ -27,11 +30,11 @@ abstract class ParkingBoy {
                 throw new NoAvailableParkingLotException();
             }
 
-            if (car == null || car.getNumber().equals("")) {
+            if (isCarNumberEmpty) {
                 throw new EmptyCarNumberException();
             }
 
-            if (allCarsNumber.contains(car.getNumber())) {
+            if (hasCarNumberExisted) {
                 throw new DuplicatedCarNumberException();
             }
 

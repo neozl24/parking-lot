@@ -1,14 +1,12 @@
 import exception.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 class ParkingLot {
     private int capacity;
     private Map<Ticket, Car> lot = new HashMap<>();
-    private Set<String> carsNumberSet = new HashSet<>();
 
     ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -29,7 +27,6 @@ class ParkingLot {
 
         Ticket ticket = new Ticket();
         lot.put(ticket, car);
-        carsNumberSet.add(car.getNumber());
         return ticket;
     }
 
@@ -58,8 +55,12 @@ class ParkingLot {
         return parkedCarsNumber < capacity ? 1 - parkedCarsNumber * 1.0 / capacity : 0;
     }
 
-    private Boolean hasCarNumberExisted(String carNumber) {
-        return carsNumberSet.contains(carNumber);
+    Boolean hasCarNumberExisted(String carNumber) {
+        return lot.values()
+                .stream()
+                .map(Car::getNumber)
+                .collect(Collectors.toSet())
+                .contains(carNumber);
     }
 
     Boolean hasCar(Car car) {
@@ -70,7 +71,4 @@ class ParkingLot {
         return lot.containsKey(ticket);
     }
 
-    Set<String> getCarsNumberSet() {
-        return carsNumberSet;
-    }
 }
