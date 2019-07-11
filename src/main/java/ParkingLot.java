@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 class ParkingLot {
     private int capacity;
-    private Map<Ticket, Car> lot = new HashMap<>();
+    private Map<Ticket, Car> ticketToCar = new HashMap<>();
 
     ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -26,7 +26,7 @@ class ParkingLot {
         }
 
         Ticket ticket = new Ticket();
-        lot.put(ticket, car);
+        ticketToCar.put(ticket, car);
         return ticket;
     }
 
@@ -34,7 +34,7 @@ class ParkingLot {
         if (ticket == null) {
             throw new TicketNullException();
         }
-        Car car = lot.get(ticket);
+        Car car = ticketToCar.get(ticket);
         if (car == null) {
             throw new TicketInvalidException();
         }
@@ -42,21 +42,21 @@ class ParkingLot {
     }
 
     Boolean hasSpace() {
-        return lot.size() < capacity;
+        return ticketToCar.size() < capacity;
     }
 
     int getRemainingSpaces() {
-        int parkedCarsNumber = lot.size();
+        int parkedCarsNumber = ticketToCar.size();
         return parkedCarsNumber < capacity ? capacity - parkedCarsNumber : 0;
     }
 
     double getVacancyRate() {
-        int parkedCarsNumber = lot.size();
+        int parkedCarsNumber = ticketToCar.size();
         return parkedCarsNumber < capacity ? 1 - parkedCarsNumber * 1.0 / capacity : 0;
     }
 
     Boolean hasCarNumberExisted(String carNumber) {
-        return lot.values()
+        return ticketToCar.values()
                 .stream()
                 .map(Car::getNumber)
                 .collect(Collectors.toSet())
@@ -64,11 +64,11 @@ class ParkingLot {
     }
 
     Boolean hasCar(Car car) {
-        return car != null && lot.containsValue(car);
+        return car != null && ticketToCar.containsValue(car);
     }
 
     Boolean canFindCarByTicket(Ticket ticket) {
-        return lot.containsKey(ticket);
+        return ticketToCar.containsKey(ticket);
     }
 
 }
